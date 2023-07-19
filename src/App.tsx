@@ -1,19 +1,34 @@
-import { useState } from "react";
+import { useAtomValue } from "jotai";
 import "./App.css";
+import { bookingFlowStepAtom } from "./bookingFlowAtoms";
+import {
+  BreadCrumb,
+  SelectHCBView,
+  SelectRegionView,
+} from "./bookingFlowViews";
 
 function App() {
-  const [count, setCount] = useState(0);
-
+  const bookingFlowCurrentStep = useAtomValue(bookingFlowStepAtom);
   return (
     <>
-      <h1>Jogo da velha</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          rowGap: 8,
+        }}
+      >
+        <div>
+          <h1>CurrentStep {bookingFlowCurrentStep}</h1>
+          <BreadCrumb />
+        </div>
+
+        {views[bookingFlowCurrentStep]}
       </div>
     </>
   );
 }
 
 export default App;
+
+const views = [<SelectRegionView />, <SelectHCBView />];
