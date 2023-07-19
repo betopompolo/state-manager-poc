@@ -1,6 +1,5 @@
-import { useAtomValue } from "jotai";
 import "./App.css";
-import { bookingFlowStepAtom } from "./bookingFlowAtoms";
+import { useBookingFlow } from "./bookingFlowStore";
 import {
   BreadCrumb,
   SelectHCBView,
@@ -8,7 +7,10 @@ import {
 } from "./bookingFlowViews";
 
 function App() {
-  const bookingFlowCurrentStep = useAtomValue(bookingFlowStepAtom);
+  const { getCurrentStep } = useBookingFlow();
+
+  const step = getCurrentStep();
+
   return (
     <>
       <div
@@ -19,11 +21,11 @@ function App() {
         }}
       >
         <div>
-          <h1>CurrentStep {bookingFlowCurrentStep}</h1>
+          <h1>CurrentStep {step}</h1>
           <BreadCrumb />
         </div>
 
-        {views[bookingFlowCurrentStep]}
+        {views[step]}
       </div>
     </>
   );

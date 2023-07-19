@@ -1,18 +1,12 @@
-import { useAtomValue, useSetAtom } from "jotai";
 import React from "react";
-import {
-  bookingFlowRegionAtom,
-  bookingFlowHCBAtom,
-  bookingFlowHCBServiceAtom,
-} from "./bookingFlowAtoms";
 import { mockedRegions } from "./mocks";
 import { Region, HCB } from "./models";
+import { useBookingFlow } from "./bookingFlowStore";
 
 export const SelectRegionView: React.FC = () => {
-  const selectRegion = useSetAtom(bookingFlowRegionAtom);
+  const selectRegion = useBookingFlow((state) => state.selectRegion);
 
   const handleRegionClick = (region: Region) => () => {
-    console.log("handleRegionClick", region.name);
     selectRegion(region);
   };
 
@@ -28,11 +22,10 @@ export const SelectRegionView: React.FC = () => {
 };
 
 export const SelectHCBView: React.FC = () => {
-  const selectedRegion = useAtomValue(bookingFlowRegionAtom);
-  const selectHCB = useSetAtom(bookingFlowHCBAtom);
+  const selectHCB = useBookingFlow((state) => state.selectHCB);
+  const selectedRegion = useBookingFlow((state) => state.region);
 
   const handleHcbClick = (hcb: HCB) => () => {
-    console.log("handleHcbClick", hcb.name);
     selectHCB(hcb);
   };
 
@@ -52,9 +45,11 @@ export const SelectHCBView: React.FC = () => {
 };
 
 export const BreadCrumb: React.FC = () => {
-  const selectedRegion = useAtomValue(bookingFlowRegionAtom);
-  const selectedHCB = useAtomValue(bookingFlowHCBAtom);
-  const selectedHCBService = useAtomValue(bookingFlowHCBServiceAtom);
+  const {
+    hcb: selectedHCB,
+    region: selectedRegion,
+    hcbService: selectedHCBService,
+  } = useBookingFlow();
 
   const steps = [selectedRegion, selectedHCB, selectedHCBService].filter(
     (it) => it !== null
