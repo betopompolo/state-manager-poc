@@ -1,5 +1,5 @@
 import { atom } from "jotai";
-import { Region, HCB, HCBService } from "./models";
+import { Region, HCB, HCBService } from "../models";
 
 export const bookingFlowRegionAtom = atom<Region | null>(null);
 export const bookingFlowHCBAtom = atom<HCB | null>(null);

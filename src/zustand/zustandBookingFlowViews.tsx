@@ -1,10 +1,10 @@
 import React from "react";
-import { mockedRegions } from "./mocks";
-import { Region, HCB } from "./models";
-import { useBookingFlow } from "./bookingFlowStore";
+import { mockedRegions } from "../mocks";
+import { Region, HCB } from "../models";
+import { useZustandBookingFlow } from "./zustandBookingFlowStore";
 
 export const SelectRegionView: React.FC = () => {
-  const selectRegion = useBookingFlow((state) => state.selectRegion);
+  const selectRegion = useZustandBookingFlow((state) => state.selectRegion);
 
   const handleRegionClick = (region: Region) => () => {
     selectRegion(region);
@@ -22,8 +22,8 @@ export const SelectRegionView: React.FC = () => {
 };
 
 export const SelectHCBView: React.FC = () => {
-  const selectHCB = useBookingFlow((state) => state.selectHCB);
-  const selectedRegion = useBookingFlow((state) => state.region);
+  const selectHCB = useZustandBookingFlow((state) => state.selectHCB);
+  const selectedRegion = useZustandBookingFlow((state) => state.region);
 
   const handleHcbClick = (hcb: HCB) => () => {
     selectHCB(hcb);
@@ -49,7 +49,7 @@ export const BreadCrumb: React.FC = () => {
     hcb: selectedHCB,
     region: selectedRegion,
     hcbService: selectedHCBService,
-  } = useBookingFlow();
+  } = useZustandBookingFlow();
 
   const steps = [selectedRegion, selectedHCB, selectedHCBService].filter(
     (it) => it !== null

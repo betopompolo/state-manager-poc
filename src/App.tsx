@@ -1,36 +1,29 @@
+import { useState } from "react";
 import "./App.css";
-import { useBookingFlow } from "./bookingFlowStore";
-import {
-  BreadCrumb,
-  SelectHCBView,
-  SelectRegionView,
-} from "./bookingFlowViews";
+import { ZustandPoC } from "./zustand/ZustandPoC";
+import { JotaiPoC } from "./jotai/JotaiPoC";
 
 function App() {
-  const { getCurrentStep } = useBookingFlow();
-
-  const step = getCurrentStep();
+  const [stateManager, setStateManager] = useState<"zustand" | "jotai">();
 
   return (
     <>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          rowGap: 8,
-        }}
-      >
-        <div>
-          <h1>CurrentStep {step}</h1>
-          <BreadCrumb />
+      {stateManager === undefined ? (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            columnGap: 16,
+          }}
+        >
+          <button onClick={() => setStateManager("zustand")}>Zustand</button>
+          <button onClick={() => setStateManager("jotai")}>Jotai</button>
         </div>
-
-        {views[step]}
-      </div>
+      ) : (
+        <>{stateManager === "zustand" ? <ZustandPoC /> : <JotaiPoC />}</>
+      )}
     </>
   );
 }
 
 export default App;
-
-const views = [<SelectRegionView />, <SelectHCBView />];

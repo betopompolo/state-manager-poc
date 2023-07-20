@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { HCB, HCBService, Region } from "./models";
+import { Region, HCB, HCBService } from "../models";
 
 export interface BookingFlowStore {
   region: Region | null;
@@ -11,7 +11,7 @@ export interface BookingFlowStore {
   selectHCBService: (hcbService: HCBService) => void;
 }
 
-export const useBookingFlow = create<BookingFlowStore>((set, get) => ({
+export const useZustandBookingFlow = create<BookingFlowStore>((set, get) => ({
   hcb: null,
   region: null,
   hcbService: null,
